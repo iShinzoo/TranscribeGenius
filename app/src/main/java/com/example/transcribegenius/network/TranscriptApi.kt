@@ -11,7 +11,7 @@ interface TranscriptApi {
     @GET("youtube-transcript")
     suspend fun getTranscript(
         @Query("video_id") videoId: String,
-        @Header(X_RapidAPI_Key) apiKey: String,
-        @Header(X_RapidAPI_Host) apiHost: String
+        @Header("X-RapidAPI-Key") apiKey: String,
+        @Header("X-RapidAPI-Host") apiHost: String
     ): TranscriptResponse
 }

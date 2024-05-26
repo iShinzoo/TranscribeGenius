@@ -74,5 +74,6 @@ dependencies {
     implementation ("androidx.compose.ui:ui-tooling:1.6.7")
     implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.8.0")
     implementation ("androidx.activity:activity-compose:1.9.0")
-
+    implementation ("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation ("com.squareup.okhttp3:logging-interceptor:4.12.0")
 }

@@ -1,5 +1,6 @@
 package com.example.transcribegenius
 
+
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -14,8 +15,8 @@ import kotlinx.coroutines.launch
 
 class ContentViewModel : ViewModel() {
 
-    val apiServiceTranscript = RetrofitInstance.transcriptApiResponse()
-    val apiServiceOpenAi = RetrofitInstance.OpenAiApiResponse()
+    private val apiServiceTranscript = RetrofitInstance.transcriptApiResponse()
+    private val apiServiceOpenAi = RetrofitInstance.OpenAiApiResponse()
 
     var transcript by mutableStateOf("")
     var generatedContent by mutableStateOf("")
@@ -26,7 +27,7 @@ class ContentViewModel : ViewModel() {
                 val response = apiServiceTranscript.getTranscript(videoId, X_RapidAPI_Key, X_RapidAPI_Host)
                 transcript = response.text
             } catch (e: Exception) {
-                transcript = "Error fetching transcript: ${e.message}"
+                transcript = "Error fetching transcript: ${e.message}. Please check the log for more details."
             }
         }
     }
@@ -35,14 +36,11 @@ class ContentViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 val request = OpenAiRequest(prompt = prompt, max_tokens = 150)
-
                 val response = apiServiceOpenAi.generateContent(Authorization, request)
                 generatedContent = response.choices.first().text
-
             } catch (e: Exception) {
-                generatedContent = "Error generating content: ${e.message}"
+                generatedContent = "Error generating content: ${e.message}. Please check the log for more details."
             }
         }
     }
-
 }

@@ -12,7 +12,7 @@ interface OpenAiApi {
     @Headers("Content-Type: application/json")
     @POST("v1/engines/davinci/completions")
     suspend fun generateContent(
-        @Header(Authorization) apiKey: String,
+        @Header("Authorization") apiKey: String,
         @Body request: OpenAiRequest
     ): OpenAiResponse
 }

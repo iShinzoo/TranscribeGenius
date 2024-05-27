@@ -1,44 +1,30 @@
 package com.example.transcribegenius.network
 
-import com.example.transcribegenius.ApiKeyInterceptor
+import com.example.transcribegenius.util.YOUR_OPENAI_API_KEY
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitInstance {
 
-    private val loggingInterceptor = HttpLoggingInterceptor().apply {
-        level = HttpLoggingInterceptor.Level.BODY
+    val youtubeApi: YouTubeApiService by lazy {
+        Retrofit.Builder().baseUrl("https://www.googleapis.com/youtube/v3/")
+            .addConverterFactory(GsonConverterFactory.create()).build()
+            .create(YouTubeApiService::class.java)
     }
 
-    private val apiKeyInterceptor = ApiKeyInterceptor(
-        apiKey = "ede88c6a1bmsh03ffbec69f6e420p13570cjsnccd815f465ba",
-        apiHost = "youtube-transcriptor.p.rapidapi.com"
-    )
+    val openAiApi: OpenAiApiService by lazy {
+        val httpClient = OkHttpClient.Builder().apply {
+            addInterceptor { chain ->
+                val request =
+                    chain.request().newBuilder().addHeader("Content-Type", "application/json")
+                        .addHeader("Authorization", "Bearer $YOUR_OPENAI_API_KEY").build()
+                chain.proceed(request)
+            }
+        }.build()
 
-    private val client = OkHttpClient.Builder()
-        .addInterceptor(loggingInterceptor)
-        .addInterceptor(apiKeyInterceptor)
-        .build()
-
-    fun transcriptApiResponse(): TranscriptApi {
-        val BASE_URL = "https://youtube-transcriptor.p.rapidapi.com/"
-        val retrofit = Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .client(client)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        return retrofit.create(TranscriptApi::class.java)
-    }
-
-    fun OpenAiApiResponse(): OpenAiApi {
-        val BASE_URL = "https://api.openai.com/"
-        val retrofit = Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .client(client)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        return retrofit.create(OpenAiApi::class.java)
+        Retrofit.Builder().baseUrl("https://api.openai.com/v1/").client(httpClient)
+            .addConverterFactory(GsonConverterFactory.create()).build()
+            .create(OpenAiApiService::class.java)
     }
 }

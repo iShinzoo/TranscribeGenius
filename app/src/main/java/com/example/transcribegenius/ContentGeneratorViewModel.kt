@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.transcribegenius.data.OpenAiRequest
 import com.example.transcribegenius.network.RetrofitInstance
 import com.example.transcribegenius.util.YOUR_OPENAI_API_KEY
+import com.example.transcribegenius.util.YOUR_YT_API_KEY
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -24,7 +25,7 @@ class ContentGeneratorViewModel : ViewModel() {
                 val videoDetails = RetrofitInstance.youtubeApi.getVideoDetails(
                     part = "snippet",
                     videoId = videoId,
-                    apiKey = "AIzaSyACERF2IDtOT33rkOa63LVn4o-ypZE8jQ0"
+                    apiKey = YOUR_YT_API_KEY
                 )
                 Log.d("ContentGenerator", "Fetched video details: $videoDetails")
 

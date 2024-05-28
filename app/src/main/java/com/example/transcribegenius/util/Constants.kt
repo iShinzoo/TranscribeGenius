@@ -1,7 +1,6 @@
 package com.example.transcribegenius.util
 
-const val X_RapidAPI_Key = "X_RapidAPI_Key"
 
-const val X_RapidAPI_Host = "X_RapidAPI_Host"
 
-const val Authorization = "OPEN_AI_API_KEY"
+const val YOUR_YT_API_KEY = "AIzaSyACERF2IDtOT33rkOa63LVn4o-ypZE8jQ0"
+const val CO_API_KEY = "eE9cViAYysfTuaHDbvAFJjp6xuW0zO4026RLrpEg"

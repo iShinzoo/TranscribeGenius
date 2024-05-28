@@ -1,6 +1,6 @@
 package com.example.transcribegenius.network
 
-import com.example.transcribegenius.util.YOUR_OPENAI_API_KEY
+import com.example.transcribegenius.util.CO_API_KEY
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -13,18 +13,24 @@ object RetrofitInstance {
             .create(YouTubeApiService::class.java)
     }
 
-    val openAiApi: OpenAiApiService by lazy {
+    private const val COHERE_BASE_URL = "https://api.cohere.com/v1/"
+
+    // Adding Cohere API service
+    val cohereApi: CohereApiService by lazy {
         val httpClient = OkHttpClient.Builder().apply {
             addInterceptor { chain ->
                 val request =
-                    chain.request().newBuilder().addHeader("Content-Type", "application/json")
-                        .addHeader("Authorization", "Bearer $YOUR_OPENAI_API_KEY").build()
+                    chain.request().newBuilder()
+                        .addHeader("Authorization", "bearer $CO_API_KEY")
+                        .addHeader("Content-Type", "application/json")
+                        .addHeader("Accept", "application/json")
+                        .build()
                 chain.proceed(request)
             }
         }.build()
 
-        Retrofit.Builder().baseUrl("https://api.openai.com/v1/").client(httpClient)
+        Retrofit.Builder().baseUrl(COHERE_BASE_URL).client(httpClient)
             .addConverterFactory(GsonConverterFactory.create()).build()
-            .create(OpenAiApiService::class.java)
+            .create(CohereApiService::class.java)
     }
 }

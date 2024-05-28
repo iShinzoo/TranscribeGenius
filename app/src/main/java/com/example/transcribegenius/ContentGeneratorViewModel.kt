@@ -3,13 +3,14 @@ package com.example.transcribegenius
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.transcribegenius.data.OpenAiRequest
 import com.example.transcribegenius.network.RetrofitInstance
-import com.example.transcribegenius.util.YOUR_OPENAI_API_KEY
 import com.example.transcribegenius.util.YOUR_YT_API_KEY
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONObject
 
 class ContentGeneratorViewModel : ViewModel() {
     private val _generatedContent = MutableStateFlow("")
@@ -21,6 +22,11 @@ class ContentGeneratorViewModel : ViewModel() {
                 Log.d("ContentGenerator", "Starting content generation")
                 val videoId = extractVideoId(youtubeUrl)
                 Log.d("ContentGenerator", "Extracted video ID: $videoId")
+
+                if (videoId.isEmpty()) {
+                    _generatedContent.value = "Invalid YouTube URL"
+                    return@launch
+                }
 
                 val videoDetails = RetrofitInstance.youtubeApi.getVideoDetails(
                     part = "snippet",
@@ -34,18 +40,21 @@ class ContentGeneratorViewModel : ViewModel() {
                 Log.d("ContentGenerator", "Video Title: $videoTitle")
                 Log.d("ContentGenerator", "Video Description: $videoDescription")
 
-                val prompt = "Generate a $contentType for a video titled '$videoTitle' with the description '$videoDescription'."
-                val openAiRequest = OpenAiRequest(
-                    model = "text-davinci-003",
-                    prompt = prompt,
-                    max_tokens = 150
-                )
-                Log.d("ContentGenerator", "OpenAI Request: $openAiRequest")
+                if (videoTitle.isEmpty() || videoDescription.isEmpty()) {
+                    _generatedContent.value = "Unable to fetch video details"
+                    return@launch
+                }
 
-                val openAiResponse = RetrofitInstance.openAiApi.generateContent(YOUR_OPENAI_API_KEY, openAiRequest)
-                Log.d("ContentGenerator", "OpenAI Response: $openAiResponse")
+                val prompt = "Write a short and engaging $contentType for a YouTube video titled '$videoTitle'. The video description is: '$videoDescription'."
+                val jsonBody = JSONObject().apply {
+                    put("prompt", prompt)
+                }
+                val requestBody = jsonBody.toString().toRequestBody("application/json".toMediaTypeOrNull())
 
-                val generatedText = openAiResponse.choices.firstOrNull()?.text.orEmpty()
+                val cohereResponse = RetrofitInstance.cohereApi.generateContent(requestBody)
+                Log.d("ContentGenerator", "Cohere Response: $cohereResponse")
+
+                val generatedText = cohereResponse.generations.firstOrNull()?.text.orEmpty()
                 Log.d("ContentGenerator", "Generated Text: $generatedText")
 
                 _generatedContent.value = generatedText

@@ -1,4 +1,4 @@
-package com.example.transcribegenius.data
+package com.example.transcribegenius.data.model
 
 
 data class CohereResponse(

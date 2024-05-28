@@ -3,7 +3,7 @@ package com.example.transcribegenius
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.transcribegenius.network.RetrofitInstance
+import com.example.transcribegenius.data.network.RetrofitInstance
 import com.example.transcribegenius.util.YOUR_YT_API_KEY
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

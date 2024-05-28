@@ -1,4 +1,4 @@
-package com.example.transcribegenius.data
+package com.example.transcribegenius.data.model
 
 data class VideoDetailsResponse(
     val items: List<VideoItem>

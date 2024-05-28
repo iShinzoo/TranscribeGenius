@@ -1,4 +1,4 @@
-package com.example.transcribegenius.network
+package com.example.transcribegenius.data.network
 
 import com.example.transcribegenius.util.CO_API_KEY
 import okhttp3.OkHttpClient

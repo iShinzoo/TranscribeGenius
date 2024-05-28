@@ -1,6 +1,6 @@
-package com.example.transcribegenius.network
+package com.example.transcribegenius.data.network
 
-import com.example.transcribegenius.data.VideoDetailsResponse
+import com.example.transcribegenius.data.model.VideoDetailsResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 

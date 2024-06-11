@@ -26,6 +26,10 @@ Transcribe Genius is an innovative application that generates content from YouTu
  
    Content Customization: Users can customize the generated content to better fit their personal or brand voice before finalizing it for publication.
 
+***Install the apk from here 👇***
+
+[Click Me !](https://github.com/iShinzoo/TranscribeGenius/releases/tag/v1.0)
+
 
 # Tech Stack
 [Kotlin](https://kotlinlang.org/):

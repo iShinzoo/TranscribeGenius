@@ -60,7 +60,7 @@ fun ContentGeneratorUI(viewModel: ContentGeneratorViewModel) {
 
     var youtubeUrl by remember { mutableStateOf(TextFieldValue("")) }
     var selectedContentType by remember { mutableStateOf("Select a Content Type") }
-    val contentTypes = listOf("LinkedIn Post", "Twitter Tweet", "Blog Post")
+    val contentTypes = listOf("LinkedIn Post", "Twitter Tweet", "Blog Content","Academic Notes")
     var expanded by remember { mutableStateOf(false) }
 
 

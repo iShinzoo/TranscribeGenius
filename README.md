@@ -1,6 +1,6 @@
 # Transcribe Genius
 
-Transcribe Genius is an innovative application that generates content from YouTube videos. By inputting a YouTube video URL and selecting a content type (Twitter tweet, LinkedIn post, or blog content), users can quickly create tailored content for different platforms. Built with modern Android technologies such as Kotlin, Jetpack Compose, Retrofit, and the MVVM architecture, Transcribe Genius offers a seamless and efficient user experience.
+Transcribe Genius is an innovative application that generates content from YouTube videos. By inputting a YouTube video URL and selecting a content type (Twitter tweet, LinkedIn post, Study Notes or blog content), users can quickly create tailored content for different platforms. Built with modern Android technologies such as Kotlin, Jetpack Compose, Retrofit, and the MVVM architecture, Transcribe Genius offers a seamless and efficient user experience.
 
 
 # Transcribe Genius Features
@@ -8,7 +8,7 @@ Transcribe Genius is an innovative application that generates content from YouTu
 
    YouTube Video Transcription: Users can input a YouTube video URL and receive a transcription of the video.
 
-   Platform-Specific Content Creation: Generate concise and relevant content for different platforms, including Twitter tweets, LinkedIn posts, and blog articles.
+   Platform-Specific Content Creation: Generate concise and relevant content for different platforms, including Twitter tweets, LinkedIn posts, Study Notes and blog articles.
 
 2. Modern Android Technologies:
  
@@ -60,12 +60,7 @@ git clone https://github.com/yourusername/transcribe-genius.git
 ```
 2. Build and run the app:
 
-  
-# Project Status
 
-These features are left to be implemented:
-
-1. Study Notes from Youtube Video.
 
 
 # Contributions
